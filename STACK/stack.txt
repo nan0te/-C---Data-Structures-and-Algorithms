@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct Stack {
+
+    int dato ;
+    struct Stack* next;
+
+}
+
+typedef Stack* pStack ;
+
+ Stack* GenerarNodo( int item ) {
+
+     Stack* aux ;
+     aux = malloc ( sizeof(Stack) ) ;
+     aux->dato = item ;
+     aux->next = NULL;
+     return aux ;
+
+}
+int isEmpty ( Stack* p ) {
+
+    return p == NULL;
+
+}
+
+void push( pStack* p, int item ) {
+
+    Stack* aux ;
+    aux = GenerarNodo(item) ;
+    aux->next = *p ;
+    *p = aux ; 
+
+}
+
+void pop( pStack* p, int* item ) {
+
+    Stack* aux ;
+     if ( isEmpty(*p) ) {
+         *item  = (*p)->date;
+         aux = *p ;
+         *p = aux->next;
+         free(aux);
+     }
+     else printf("\n ESTA VACIA") ;
+
+
+} 
+
+int contain ( int item, pStack* stack ) {
+
+    int result = 0 ;
+
+        while ( stack->dato != NULL  &&  result != 1 ) {
+    
+            if ( item == *stack->dato ) result  = 1;
+    
+            *stack = stack->next;     
+        }
+    
+        return result ;
+}
+
+Stack* Set ( pStack* a, pStack* b ) {
+
+    Stack* set ;
+
+    while ( !isEmpty(a) )  {
+     
+        if ( contain(*a->dato, *b) ){   
+            
+            set->push(a, a->dato);
+            *a = a->next;
+    
+         }
+    }
+
+    return set;
+
+}

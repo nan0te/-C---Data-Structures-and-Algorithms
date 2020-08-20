@@ -1,0 +1,1 @@
+gcc recursividad.c -o recursividad.exe

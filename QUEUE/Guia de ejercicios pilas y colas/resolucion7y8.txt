@@ -1,0 +1,63 @@
+/*
+void EjercicioSiete( pStack* stack, pStack* aux, int acumulador, int cantidadItems, float promedio ) {
+
+        if ( isEmpty(*stack) ) exit(EXIT_FAILURE);
+
+        else {
+
+            acumulador += pop(stack);
+            push(aux,acumulador);
+            EjercicioSiete(stack,aux,acumulador,cantidadItems+1, acumulador/cantidadItems);
+      
+        }
+
+} */
+
+
+void EjercicioOcho(pStack* A, pStackChar* b, tCabecera* C) {
+
+        int count = 0 ;
+        int _pop = 0 ;
+        char _popChar = 0 ;
+        char _enqueue = 0 ;
+        
+        while ( !isEmpty(*A) ) {
+
+          _pop = pop(A);
+
+            if ( _pop > 0 ) {
+                    
+                    while ( count <= _pop  ) {
+
+                        _popChar = popChar(b);
+                        enqueue(C,_popChar);
+                        pushChar(b,_popChar);
+                        count++;
+
+                    }
+
+                    _popChar = popChar(b);
+                    count = 0 ;
+
+                }
+
+                else if ( _pop < 0 ) {
+
+                    while ( count <= _pop && (!isEmptyQueue(*C))  ) {
+
+                        _enqueue = dequeue(C);
+                        count++;
+
+                    }
+
+                    count = 0 ;
+                }
+
+                else if ( _pop == 0 ) {
+
+                    _popChar = popChar(b);
+
+                }
+        }
+
+} 
