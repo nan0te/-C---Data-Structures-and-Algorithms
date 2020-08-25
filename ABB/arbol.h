@@ -2,25 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Arbol{
+typedef struct Arbol {
+
     int data;
     struct Arbol *izq;
     struct Arbol *der;
-}tarbol;
+
+} tarbol;
 
 //---------------------------------------------------
 
 void Carga(tarbol **A,int X){
-    if (*A == NULL){
+
+    if (*A == NULL) {
+    
         *A = malloc(sizeof(tarbol));
         (*A)->data = X;
         (*A)->izq = NULL;
         (*A)->der = NULL;
+
     }
-    else if  ((*A)->data > X)
-        Carga(&(*A)->izq, X);
-    else
-        Carga(&(*A)->der, X);
+
+    else if  ((*A)->data > X)  Carga(&(*A)->izq, X);
+
+    else Carga(&(*A)->der, X);
+
 }
 
 void CantidadPares( tarbol* A , int* count) {
@@ -41,6 +47,7 @@ void printfNodosGradoDos ( tarbol* root ) {
     tarbol* right;
 
     if (root != NULL) {
+
         if (root->izq != NULL) left = root->izq;
         else if (root->der != NULL) right = root->der;
     }
@@ -56,9 +63,11 @@ void printfNodosGradoDos ( tarbol* root ) {
 void InOrderSearch (tarbol* root, int item, int* result) {
 
     if (root != NULL && (*result) == 0) {
+
         InOrderSearch(root->izq, item, result);
         if ( root->data == item ) (*result) = 1;
         InOrderSearch(root->der, item, result);
+
     }
 }
 
@@ -75,9 +84,11 @@ void InsertWithoutRepeats (tarbol** root, int item) {
 void StackAscendente( pStack stack, tarbol* root ) {
 
          if (root != NULL) {
+
             StackAscendente(stack, root->izq);
             push(&stack, root->data);
             InOrderSearch(stack, root->der);
+
        }
 
 }
@@ -85,9 +96,11 @@ void StackAscendente( pStack stack, tarbol* root ) {
 void ContarItemMayoresYMenoresQue ( tarbol* root, int menor, int mayor, int* count ) {
 
             if (root != NULL) {
+
             ContarItemMayoresYMenoresQue(root->izq, menor, mayor, count);
             if ( root->data > menor && root->data < mayor ) (*count) = (*count) + 1 ;
             ContarItemMayoresYMenoresQue(root->der, menor, mayor, count);
+
        }
 
 }
@@ -95,6 +108,7 @@ void ContarItemMayoresYMenoresQue ( tarbol* root, int menor, int mayor, int* cou
 void InOrderSearchItem (tarbol* root, int item, int* encontrado ) {
 
     if (root != NULL && (*encontrado) == 0) {
+
         InOrderSearchItem(root->izq, item, encontrado);
         if ( root->data == item ) {
             printf("\nEl item %d se encuentra en el arbol.\n" );
@@ -105,7 +119,7 @@ void InOrderSearchItem (tarbol* root, int item, int* encontrado ) {
 }
 
 //----------------------------------------------------
-void MuestraIn(tarbol* root) {
+void MuestraIn (tarbol* root) {
 
     if (root!=NULL){
         MuestraIn(root->izq);
@@ -117,7 +131,7 @@ void MuestraIn(tarbol* root) {
 
 
 //----------------------------------------------------
-void MuestraPre(tarbol* root) {
+void MuestraPre (tarbol* root) {
     if (root!=NULL){
         printf("[ %d ]", root->data);
         MuestraIn(root->izq);
@@ -125,7 +139,7 @@ void MuestraPre(tarbol* root) {
     }
 }
 //----------------------------------------------------
-void MuestraPos(tarbol* root) {
+void MuestraPos (tarbol* root) {
     if (root!=NULL){
         MuestraIn(root->izq);
         MuestraIn(root->der);
@@ -134,7 +148,7 @@ void MuestraPos(tarbol* root) {
 }   
 
 //--------------------------------------------------
-int CantNodos(tarbol *A){
+int CantNodos (tarbol *A){
 
     if (A==NULL) return(0);
     else return(1+(CantNodos(A->izq)+CantNodos(A->der)));
@@ -152,34 +166,40 @@ void inicializar (tarbol** a) {
 }
 //--------------------------------------------------------------------------------------
 void buscar (tarbol *a, int c, int *enc) {
-if (a!=NULL)
-    {
-    if (a->data == c)
-        *enc=1;
-    else if (a->data>c)
-            buscar(a->izq, c, enc);
-    else
-        buscar(a->der, c, enc);
-    }
-    else
-        *enc=0;
+    if (a!=NULL)  {
+
+        if (a->data == c)
+            *enc=1;
+
+        else if (a->data>c)
+                buscar(a->izq, c, enc);
+
+        else
+            buscar(a->der, c, enc);
+        }
+
+        else
+            *enc=0;
 }
 //--------------------------------------------------------------------------------------
-int Altura(tarbol *A) {
+int Altura (tarbol *A) {
+
     if (A==NULL)   return(0);
     else if ((Altura(A->der)) > (Altura(A->izq)))  return(1+Altura(A->der));
     else return(1+Altura(A->izq));
+
 }
 //----------------------------------------------------------------------
-int Altura1(tarbol *A){
+int Altura1 (tarbol *A) {
     int hd,hi;
     if (A==NULL) return(0);
     
-    else    {
+    else {
         hd=Altura1(A->der);
         hi=Altura1(A->izq);
     if (hd>hi) return (hd+1);
 
     else return(hi+1);
+    
     }
 }

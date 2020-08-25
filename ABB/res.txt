@@ -1,0 +1,88 @@
+void CantidadPares( tarbol* A , int* count) {
+        
+    if( A != NULL ){
+
+        CantidadPares(A->izq,count);
+        if ( A->data % 2 == 0 )  (*count) = (*count) + 1 ;
+        CantidadPares(A->der,count);
+
+    }
+
+}
+
+void printfNodosGradoDos ( tarbol* root ) {
+
+    tarbol* left;
+    tarbol* right;
+
+    if (root != NULL) {
+
+        if (root->izq != NULL) left = root->izq;
+        else if (root->der != NULL) right = root->der;
+    }
+
+    if  (left->izq != NULL)      printf("\n Nodo menor izq grado 2 : %d \n", left->izq->data);
+    else if (left->der != NULL)  printf("\n Nodo menor der grado 2: %d \n", left->der->data);
+
+    else if (right->izq != NULL) printf("\n Nodo mayor der grado 2: %d \n", right->izq->data);
+    else if (right->der != NULL) printf("\n Nodo mayor der grado 2: %d \n", right->der->data);
+    
+}
+
+void InOrderSearch (tarbol* root, int item, int* result) {
+
+    if (root != NULL && (*result) == 0) {
+
+        InOrderSearch(root->izq, item, result);
+        if ( root->data == item ) (*result) = 1;
+        InOrderSearch(root->der, item, result);
+
+    }
+}
+
+void InsertWithoutRepeats (tarbol** root, int item) {
+
+        int result = 0 ;
+        InOrderSearch(*root,item,&result);
+
+        if (result == 0) Carga(root,item);
+        else printf("\n No se puede instertar el Item. Ya existe en el Arbol\n"); 
+
+}
+
+void StackAscendente( pStack stack, tarbol* root ) {
+
+         if (root != NULL) {
+
+            StackAscendente(stack, root->izq);
+            push(&stack, root->data);
+            InOrderSearch(stack, root->der);
+
+       }
+
+}
+
+void ContarItemMayoresYMenoresQue ( tarbol* root, int menor, int mayor, int* count ) {
+
+            if (root != NULL) {
+
+            ContarItemMayoresYMenoresQue(root->izq, menor, mayor, count);
+            if ( root->data > menor && root->data < mayor ) (*count) = (*count) + 1 ;
+            ContarItemMayoresYMenoresQue(root->der, menor, mayor, count);
+
+       }
+
+}
+
+void InOrderSearchItem (tarbol* root, int item, int* encontrado ) {
+
+    if (root != NULL && (*encontrado) == 0) {
+
+        InOrderSearchItem(root->izq, item, encontrado);
+        if ( root->data == item ) {
+            printf("\nEl item %d se encuentra en el arbol.\n" );
+            (*encontrado) = 1 ;
+        }
+        InOrderSearchItem(root->der, item, encontrado);
+    }
+}
