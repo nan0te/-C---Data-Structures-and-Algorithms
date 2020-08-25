@@ -44,7 +44,7 @@ void Insertar ( tCabecera* cabeza, unsigned int matricula, unsigned int califica
 
     nuevo = GenerarNodo(matricula,calificacion,name);
 
-    if ( !cabeza->first  ) {
+    if ( cabeza->first == NULL  ) {
 
         cabeza->first = nuevo; // si el primer item esta vacio 
         cabeza->last = nuevo;
@@ -52,7 +52,6 @@ void Insertar ( tCabecera* cabeza, unsigned int matricula, unsigned int califica
         }
 
     else if ( matricula < cabeza->first->matricula ) {
-
         //agregar al inicio
         // correr el primero
         cabeza->first->prev = nuevo;
@@ -63,8 +62,7 @@ void Insertar ( tCabecera* cabeza, unsigned int matricula, unsigned int califica
     }
 
     else if ( matricula > cabeza->last->matricula ) {
-
-                               //agrego al final
+                                //agrego al final
                                 //apunto nuevo->prev a cabecera->last y cabezacera->last nuevo
         cabeza->last->next = nuevo;
         nuevo->prev = cabeza->last;
@@ -120,12 +118,16 @@ void EliminarItem( tCabecera* cabeza, char name[30] ) {
                    prev = act ; 
                    act = act->next;
             }
-            aux = act;
-            prev->next = act->next;
-            act = act->next;
-            act->prev = prev;
-            free(aux);
 
+            if ( strcmp( act->name, name ) == 0 ) {
+                aux = act;
+                prev->next = act->next;
+                act = act->next;
+                act->prev = prev;
+                free(aux);
+            }
+
+            else printf("\n Element does not exist");
         }
 }
 
@@ -151,7 +153,8 @@ void Modificar( tCabecera* cabeza, char name[30], unsigned int calificacion ) {
                 act = act->next;
             }
 
-            act->calificacion = calificacion;
+            if (strcmp(act->name, name) == 0 )  act->calificacion = calificacion;
+            else printf("\n Element does not exist");
     }
 }
 
@@ -160,113 +163,21 @@ void ImprimirItem( tCabecera* cabeza, char name[30] ) {
   
     tLista act;
     act = cabeza->first;
-    printf("asdasdqweqw");
+   
 
     while (act != NULL && (strcmp(act->name, name) != 0) ) {
         
         act = act->next;
-        printf("asdasdqweqw");
-        
+      
     }
 
+    if (strcmp(act->name, name) == 0) {
         printf("\n Matricula: %d ", act->matricula);
         printf("\n Matricula: %s ", act->name);
         printf("\n Matricula: %d \n", act->calificacion);
-}
-/*void ImprimirNodos (tLista list) {
-
-    while ( list != NULL ) {
+    }
         
-        printf("%d \n", list->matricula);
-        printf("%s \n", &list->name);
-        printf("%d \n", list->calificacion);
-        list = list->next;
-       
-    }
-
-}   
-
-
-
-
-
-void ModificarCalificacion(tLista* list, char nombre[30] , unsigned int ncalificacion ) {
-
-    tLista actual = NULL;
-    actual = *list;
-    int fin = 0 ;
-
-    while ( actual != NULL && fin == 0 ) {
-
-                if (  charCompare(actual->name , nombre) != 0 ) {
-
-                    printf("alumno encontrado");
-                    actual->calificacion = ncalificacion ;
-                    printf("\n se modifico");
-                    printf("\n la calificacion ahora es de : %d ", actual->calificacion );
-
-                    fin == 1 ;
-                }
-                actual = actual->next;
-    }
-
+    else
+        printf("\n Element does not exist");
+    
 }
-
-void PrintAprobados (tLista list)
-{
-
-    while (list != NULL  )
-    {
-        if (list->calificacion >= 7) {
-        printf("%d \n", list->matricula);
-        printf("%s \n", &list->name);
-        printf("%d \n", list->calificacion);
-        }
-        list = list->next;
-    }
-}
-
-
-void CountDesaprobados ( tLista list) {
-
-    int count = 0 ;
-
-    while (list != NULL )
-    {
-        if (list->calificacion >= 7) count++;
-         
-        list = list->next;
-    }
-
-    printf(" \n Cantidad de desaprobados : %d " , count ) ;
-}
-
-void EliminarEstudiante(tLista *list, char nombre[30])
-{
-
-    tLista actual,anterior ;
-    actual = *list; anterior = NULL;
-    int fin = 0;
-
-    while (actual != NULL && fin == 0)
-    {
-
-        if (charCompare(actual->name, nombre) != 0)
-        {
-            printf("\n estudiante encontrado : ");
-
-            if ( actual == NULL )  {
-
-                if( actual == *list) *list = actual->next ;
-                else anterior->next = actual->next ;
-                free(actual);
-            }
-               
-            printf("\n estudiante eliminado : ");   
-            fin == 1;
-        }
-        
-        anterior = actual;
-        actual = actual->next;
-    }
-}*/

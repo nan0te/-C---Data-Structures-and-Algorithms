@@ -1,0 +1,1 @@
+gcc -Wall main.c -o app.exe
